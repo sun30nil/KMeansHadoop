@@ -1,0 +1,40 @@
+
+KMeansHadoop: is the folder which contains all the code for the problem set 2(Kmeans)
+
+Inside this folder you've:
+src: source file containing KMeansDriver, KMeansMapper, KMeansReducer
+out: part-00000 , here you can find the output classified into two classes 1, 2
+centroid10.csv: is the centroids file initially to be placed inside the hdfs
+datasets.csv: contains the dataset on which the map reduce runs (to be placed in the hdfs along with centroid10.csv)
+
+HADOOP CONSOLE output: This is the console output which I ran on my system with the above files. Have a look at it, you can find at each iteration how the centroid is converging and after converging it becomes constant.
+
+Here how you need to run the above mapreduce by generating the jar for the folder KMeansHadoop:
+
+Before Generating the JAR make the following changes in the source code:
+
+Changes in "KMeansDriver.java":
+	line 25: counter value could be set depending on your wish
+	line 40: (change it only if your output folder is not "out") outFolder could be changed to some other name if you save your output in any other folder
+
+Changes in "KMeansMapper.java":
+	line 19: centroidFileName should be set to the pathname of centroid10.csv saved in your hdfs
+
+Changes in "KMeansReducer.java":
+	line 20: centroidFileName should be set to the pathname of centroid10.csv saved in your hdfs
+
+
+Place two files in your hdfs: 1) datasets.csv and 2) centroid10.csv
+Once you're done with these changes, create a jar from the source code and execute it using the usual hadoop command
+
+hadoop jar yourJARfilename [hdfs_path_of_dataset] [hdfs_path_of_output]
+
+Incase you get an error "org.apache.hadoop.fs.ChecksumException":
+Dont worry, it's because of some bug in your version of hadoop.
+Just delete the centroid10.csv file from hdfs and rename it so that it doesn't match with any of the previous names and also do the same changes in your source code. 
+Then create a new JAR file and you're ready to run it again. 
+
+
+
+
+
